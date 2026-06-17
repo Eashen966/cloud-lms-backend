@@ -27,9 +27,12 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
-    public Course updateCourse(Integer courseId, Course updatedDetails) {
+    public Course updateCourse(Integer courseId, Course updatedDetails, Integer instructorId) {
         Course existing = courseRepository.findById(courseId)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
+        if (!existing.getInstructor().getUserId().equals(instructorId)) {
+            throw new RuntimeException("Unauthorized: You can only edit courses you created.");
+        }
         existing.setCourseName(updatedDetails.getCourseName());
         existing.setCourseCode(updatedDetails.getCourseCode());
         existing.setDescription(updatedDetails.getDescription());
@@ -38,9 +41,12 @@ public class CourseService {
         return courseRepository.save(existing);
     }
 
-    public void deleteCourse(Integer courseId) {
+    public void deleteCourse(Integer courseId, Integer instructorId) {
         Course existing = courseRepository.findById(courseId)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
+        if (!existing.getInstructor().getUserId().equals(instructorId)) {
+            throw new RuntimeException("Unauthorized: You can only delete courses you created.");
+        }
         courseRepository.delete(existing);
     }
 

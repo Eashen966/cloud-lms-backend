@@ -28,18 +28,18 @@ public class CourseController {
     }
 
     @PutMapping("/{courseId}")
-    public ResponseEntity<?> update(@PathVariable Integer courseId, @RequestBody Course course) {
+    public ResponseEntity<?> update(@PathVariable Integer courseId, @RequestBody Course course, @RequestParam Integer instructorId) {
         try {
-            return ResponseEntity.ok(courseService.updateCourse(courseId, course));
+            return ResponseEntity.ok(courseService.updateCourse(courseId, course, instructorId));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
         }
     }
 
     @DeleteMapping("/{courseId}")
-    public ResponseEntity<?> delete(@PathVariable Integer courseId) {
+    public ResponseEntity<?> delete(@PathVariable Integer courseId, @RequestParam Integer instructorId) {
         try {
-            courseService.deleteCourse(courseId);
+            courseService.deleteCourse(courseId, instructorId);
             return ResponseEntity.ok(Map.of("message", "Course deleted successfully"));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
