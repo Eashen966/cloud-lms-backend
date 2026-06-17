@@ -31,7 +31,8 @@ public class UserController {
         try {
             String matricNo = credentials.get("matricNo");
             String password = credentials.get("password");
-            return ResponseEntity.ok(userService.authenticate(matricNo, password));
+            User user = userService.authenticate(matricNo, password);
+            return ResponseEntity.ok(user);
         } catch (Exception e) {
             return ResponseEntity.status(401).body(Map.of("message", e.getMessage()));
         }

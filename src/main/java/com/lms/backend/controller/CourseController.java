@@ -27,6 +27,34 @@ public class CourseController {
         return ResponseEntity.ok(courseService.getAllCourses());
     }
 
+    @PutMapping("/{courseId}")
+    public ResponseEntity<?> update(@PathVariable Integer courseId, @RequestBody Course course) {
+        try {
+            return ResponseEntity.ok(courseService.updateCourse(courseId, course));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
+        }
+    }
+
+    @DeleteMapping("/{courseId}")
+    public ResponseEntity<?> delete(@PathVariable Integer courseId) {
+        try {
+            courseService.deleteCourse(courseId);
+            return ResponseEntity.ok(Map.of("message", "Course deleted successfully"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
+        }
+    }
+
+    @GetMapping("/enrolled/{studentId}")
+    public ResponseEntity<?> getEnrolled(@PathVariable Integer studentId) {
+        try {
+            return ResponseEntity.ok(courseService.getEnrolledCourses(studentId));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
+        }
+    }
+
     @PostMapping("/{courseId}/enroll")
     public ResponseEntity<?> enroll(@PathVariable Integer courseId, @RequestBody Map<String, Integer> payload) {
         try {

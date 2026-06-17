@@ -46,4 +46,6 @@ public class UserService {
     public Optional<User> getUserById(Integer userId) {
         return userRepository.findById(userId);
     }
+
+
 }

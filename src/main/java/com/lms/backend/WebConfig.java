@@ -1,4 +1,4 @@
-package com.lms.backend.config; // Adjust this package path to match your folder structure
+package com.lms.backend; // Adjust this package path to match your folder structure
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
